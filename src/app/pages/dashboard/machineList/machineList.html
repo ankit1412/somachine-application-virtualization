@@ -1,0 +1,111 @@
+<style>
+            /* Needed for hiding crollbars when pushing */
+            html {
+                overflow-x: hidden;
+            }
+
+            .ng-pageslide {
+                background: #3CCD60;
+                border: 1px solid;
+                box-shadow: 5px 5px #888888; 
+            }
+
+            body.ng-pageslide-body-open::before {
+                content: '.';
+                display: block;
+                position: absolute;
+                top: 0;
+                background-color: rgb(0,0,0);
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1;
+                opacity: 0.5;
+                transition: opacity 1s;
+                opacity: 0.5;
+                pointer-events: all;
+            }
+
+            body.ng-pageslide-body-closed::before {
+                transition: opacity 1s;
+                content: '.';
+                display: block;
+                position: absolute;
+                top: 0;
+                background-color: rgb(0,0,0);
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1;
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            #container1, #container2 {
+                width: 100%;
+                height: 20rem;
+                border: 1px solid lightGrey;
+
+                p {
+                    font-size: 0.5rem!important;
+                }
+            }
+            #parent {
+  display: flex;
+  max-width: 1000px;
+  max-height: 1000px;
+}
+#services {
+  width: 40%;
+  /* Just so it's visible */
+}
+#machineDetails {
+  flex: 1;
+  /* Grow to rest of container */
+  margin-right: 20px;
+  margin-left: 20px;
+
+  border-right: 2px solid;
+  overflow: auto;
+  /* Just so it's visible */
+}
+
+        </style>
+<div class="horizontal-scroll">
+  <table class="table" st-table="smartTableData">
+    <thead>
+    <tr class="sortable ">
+      <th class="table-id" st-sort="id" st-sort-default="true">#</th>
+      <th st-sort="name">Machine Name</th>
+      <th st-sort="version">Version</th>
+      <th st-sort="type">Type</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th><input st-search="name" placeholder="Search machine Name" class="input-sm form-control search-input"
+                 type="search"/></th>
+      <th><input st-search="version" placeholder="Search version" class="input-sm form-control search-input"
+                 type="search"/></th>
+      <th><input st-search="type" placeholder="Search type" class="input-sm form-control search-input"
+                 type="search"/></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in smartTableData">
+      <td class="table-id">{{item.id}}</td>
+      <td>
+        <a href="" data-toggle="modal" ng-click="open('app/pages/dashboard/machineListModals/machineDetails.html', 'lg')">{{item.name}}</a>
+      </td>
+      <td>{{item.version}}</td>
+      <td>{{item.type}}</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="6" class="text-center">
+        <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="5"></div>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+</div>
