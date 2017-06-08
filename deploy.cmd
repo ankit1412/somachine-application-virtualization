@@ -1,8 +1,8 @@
 @if "%SCM_TRACE_LEVEL%" NEQ "4" @echo off
 
 :: ----------------------
-:: SOMACHINE Deployment Script
-:: Version: 1.0.0
+:: KUDU Deployment Script
+:: Version: 1.0.13
 :: ----------------------
 
 :: Prerequisites
@@ -97,25 +97,15 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 :: 2. Select node version
 call :SelectNodeVersion
 
-:: 3. Install npm packages (remove the --production switch!)
+:: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd !NPM_CMD! install
+  call :ExecuteCmd !NPM_CMD! install --production
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
 
-
-:: 4. Install bower packages
-IF EXIST "%DEPLOYMENT_TARGET%\bower.json" (
-  pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd .\node_modules\.bin\bower install
-  IF !ERRORLEVEL! NEQ 0 goto error
-  popd
-)
-
-
-:: 5. Run gulp transformations
+:: 4. Run gulp transformations
 IF EXIST "%DEPLOYMENT_TARGET%\gulpfile.js" (
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd .\node_modules\.bin\gulp
@@ -123,14 +113,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\gulpfile.js" (
   popd
 )
 
-
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:: Post deployment stub
-IF DEFINED POST_DEPLOYMENT_ACTION call "%POST_DEPLOYMENT_ACTION%"
-IF !ERRORLEVEL! NEQ 0 goto error
-
 goto end
 
 :: Execute command routine that will echo out when error
