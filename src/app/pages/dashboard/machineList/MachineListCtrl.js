@@ -44,13 +44,13 @@
       {
         id: 1,
         name: 'Machine 1',
-        version: 'v4.1',
+        version: 'v1.0',
         type: 'basic'
       },
       {
         id: 2,
         name: 'Machine 2',
-        version: 'v4.0',
+        version: 'v1.0',
         type: 'basic'
       },
       {
@@ -68,7 +68,7 @@
       {
         id: 5,
         name: 'Machine 5',
-        version: 'v4.0',
+        version: 'v1.1',
         type: 'basic'
       },
       {
